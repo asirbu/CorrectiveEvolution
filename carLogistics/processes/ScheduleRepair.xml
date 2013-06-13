@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<process xmlns="http://soa.fbk.eu/Process" xmlns:obj="http://soa.fbk.eu/Object" xmlns:cnf="http://soa.fbk.eu/CNFFormula"
+  name="ScheduleRepair">
+  <activities>
+    <activity name="Assess damage">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Damaged" objectID="CarHealth" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="diagnose" objectID="CarHealth" />
+        <obj:literal event="addT" objectID="Schedule" />
+      </effect>
+    </activity>
+  </activities>
+
+  <nodes>
+    <activityNode nodeID="node6" activity="Assess damage" />
+  </nodes>
+</process>

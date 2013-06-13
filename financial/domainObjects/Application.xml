@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="Application" xmlns="http://soa.fbk.eu/Object">
+  <states>
+    <state>NotExist</state>
+    <state>Submitted</state>
+    <state>PartlySubmitted</state>
+    <state>Preaccepted</state>
+   
+   <state>AddingInfo</state>
+   <state>NotEligible</state>
+     <state>Declined</state>
+    <state>Accepted</state>
+     <state>Cancelled</state>
+    
+    <state>Finalized</state>
+    <state>Assessing</state>
+    
+    <state>Approved</state>
+    <state>Activated</state>
+  </states>
+
+  <initialStates>
+    <state>NotExist</state>
+  </initialStates>
+
+  <events>
+     <event isControllable="true">submit</event>
+     <event isControllable="true">partlySubmit</event>
+     
+     <event isControllable="true">preaccept</event>
+      <event isControllable="true">accept</event>
+       <event isControllable="true">cancel</event>
+      <event isControllable="true">finalize</event>
+      <event isControllable="true">approve</event>
+     <event isControllable="true">activate</event>
+     <event isControllable="true">decline</event>
+     
+     <event isControllable="true">addInfo</event>
+     <event isControllable="true">incomplete</event>
+     <event isControllable="true">assess</event>
+     
+     <event isControllable="false">isNotEligible</event>
+  </events>
+
+  <transitions>
+    <transition>
+      <startState>NotExist</startState>
+      <event>submit</event>
+      <endState>Submitted</endState>
+    </transition>
+    
+    <transition>
+      <startState>Submitted</startState>
+      <event>partlySubmit</event>
+      <endState>PartlySubmitted</endState>
+    </transition>
+    
+    <transition>
+      <startState>PartlySubmitted</startState>
+      <event>decline</event>
+      <endState>Declined</endState>
+    </transition>
+    
+    <transition>
+      <startState>PartlySubmitted</startState>
+      <event>isNotEligible</event>
+      <endState>NotEligible</endState>
+    </transition>
+     <transition>
+      <startState>AddingInfo</startState>
+      <event>isNotEligible</event>
+      <endState>NotEligible</endState>
+    </transition>
+    
+    <transition>
+      <startState>NotEligible</startState>
+      <event>decline</event>
+      <endState>Declined</endState>
+    </transition>
+    
+    <transition>
+      <startState>AddingInfo</startState>
+      <event>cancel</event>
+      <endState>Cancelled</endState>
+    </transition>
+    
+    <transition>
+      <startState>AddingInfo</startState>
+      <event>addInfo</event>
+      <endState>AddingInfo</endState>
+    </transition>
+    
+    <transition>
+      <startState>Accepted</startState>
+      <event>isNotEligible</event>
+      <endState>NotEligible</endState>
+    </transition>
+    
+    <transition>
+      <startState>Finalized</startState>
+      <event>assess</event>
+      <endState>Assessing</endState>
+    </transition>
+     <transition>
+      <startState>Finalized</startState>
+      <event>cancel</event>
+      <endState>Cancelled</endState>
+    </transition>
+     <transition>
+      <startState>Finalized</startState>
+      <event>isNotEligible</event>
+      <endState>NotEligible</endState>
+    </transition>
+    
+    
+    <transition>
+      <startState>Assessing</startState>
+      <event>isNotEligible</event>
+      <endState>NotEligible</endState>
+    </transition>
+    
+ <transition>
+      <startState>PartlySubmitted</startState>
+      <event>preaccept</event>
+      <endState>Preaccepted</endState>
+    </transition>
+    
+    <transition>
+      <startState>Preaccepted</startState>
+      <event>addInfo</event>
+      <endState>AddingInfo</endState>
+    </transition>
+     <transition>
+      <startState>AddingInfo</startState>
+      <event>accept</event>
+      <endState>Accepted</endState>
+    </transition>
+     <transition>
+      <startState>Preaccepted</startState>
+      <event>cancel</event>
+      <endState>Cancelled</endState>
+    </transition>
+    
+    <transition>
+      <startState>Accepted</startState>
+      <event>finalize</event>
+      <endState>Finalized</endState>
+    </transition>
+     <transition>
+      <startState>Accepted</startState>
+      <event>cancel</event>
+      <endState>Cancelled</endState>
+    </transition>
+    
+    <transition>
+      <startState>Assessing</startState>
+      <event>approve</event>
+      <endState>Approved</endState>
+    </transition>
+    <transition>
+      <startState>Assessing</startState>
+      <event>cancel</event>
+      <endState>Cancelled</endState>
+    </transition>
+   
+    
+    <transition>
+      <startState>Approved</startState>
+      <event>activate</event>
+      <endState>Activated</endState>
+    </transition>
+    
+  </transitions>
+</object>

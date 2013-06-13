@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<goal xmlns="http://soa.fbk.eu/Goal" xmlns:obj="http://soa.fbk.eu/Object"
+	xmlns:cnf="http://soa.fbk.eu/CNFFormula" name="FinancialProcesGoal">
+	<result>
+		<formula>
+			<cnf:and>
+				<cnf:orClause>
+					<obj:literal state="Activated" objectID="Application" />
+				</cnf:orClause>
+				<cnf:orClause>
+					<obj:literal state="NotExist" objectID="Afhandelen_leads" />
+					<obj:literal state="Completed" objectID="Afhandelen_leads" />
+					<obj:literal state="Started" objectID="Afhandelen_leads" />
+					<obj:literal state="Scheduled" objectID="Afhandelen_leads" />
+				</cnf:orClause>
+			</cnf:and>
+		</formula>
+
+		<formula>
+			<cnf:and>
+				<cnf:orClause>
+					<obj:literal state="Declined" objectID="Application" />
+					<obj:literal state="Cancelled" objectID="Application" />
+				</cnf:orClause>
+				<cnf:orClause>
+					<obj:literal state="NotExist" objectID="Afhandelen_leads" />
+					<obj:literal state="Completed" objectID="Afhandelen_leads" />
+					<obj:literal state="Started" objectID="Afhandelen_leads" />
+					<obj:literal state="Scheduled" objectID="Afhandelen_leads" />
+				</cnf:orClause>
+			</cnf:and>
+		</formula>
+
+	</result>
+</goal>

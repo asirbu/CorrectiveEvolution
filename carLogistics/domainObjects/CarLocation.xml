@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="CarLocation" xmlns="http://soa.fbk.eu/Object">
+  <states>
+    <state>Terminal</state>
+    <state>Storage</state>
+    <state>Treatment</state>
+    <state>Retailer</state>
+  </states>
+
+  <initialStates>
+    <state>Terminal</state>
+  </initialStates>
+
+  <events>
+    <event isControllable="true">move2Stg</event>
+    <event isControllable="true">move2Tt</event>
+    <event isControllable="true">move2Ret</event>
+  </events>
+
+  <transitions>
+    <transition>
+      <startState>Terminal</startState>
+      <event>move2Stg</event>
+      <endState>Storage</endState>
+    </transition>
+  
+    <transition>
+      <startState>Treatment</startState>
+      <event>move2Stg</event>
+      <endState>Storage</endState>
+    </transition>
+    
+    <transition>
+      <startState>Storage</startState>
+      <event>move2Ret</event>
+      <endState>Retailer</endState>
+    </transition>  
+    
+    <transition>
+      <startState>Treatment</startState>
+        <event>move2Ret</event>
+        <endState>Retailer</endState>
+   </transition>  
+   
+    <transition>
+      <startState>Storage</startState>
+        <event>move2Tt</event>
+        <endState>Treatment</endState>
+    </transition>  
+  </transitions>
+</object>

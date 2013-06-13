@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="Schedule" xmlns="http://soa.fbk.eu/Object">
+  <states>
+    <state>Empty</state>
+    <state>Pending</state>
+  </states>
+
+  <initialStates>
+    <state>Empty</state>
+  </initialStates>
+
+  <events>
+    <event isControllable="true">addT</event>
+    <event isControllable="true">done</event>
+  </events>
+
+  <transitions>
+    <transition>
+      <startState>Empty</startState>
+      <event>addT</event>
+      <endState>Pending</endState>
+    </transition>
+
+    <transition>
+      <startState>Pending</startState>
+      <event>addT</event>
+      <endState>Pending</endState>
+    </transition>
+
+    <transition>
+      <startState>Pending</startState>
+      <event>done</event>
+      <endState>Empty</endState>
+    </transition>
+  </transitions>
+</object>

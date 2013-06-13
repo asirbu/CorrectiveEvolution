@@ -1,0 +1,15 @@
+digraph G {
+  1 [ label="Start" shape="oval" ];
+  2 [ label="Show directions to storage" shape="box" ];
+  3 [ label="At storage" shape="box" ];
+  4 [ label="Receive delivery order" shape="box" ];
+  5 [ label="Fix pending treatments" shape="box" ];
+  6 [ label="Deliver to retailer" shape="box" ];
+  7 [ label="End" shape="oval" ];
+  6 -> 7 [ label="" ];
+  4 -> 5 [ label="" ];
+  3 -> 4 [ label="" ];
+  1 -> 2 [ label="" ];
+  2 -> 3 [ label="" ];
+  5 -> 6 [ label="" ];
+}

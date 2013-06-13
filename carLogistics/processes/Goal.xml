@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<goal xmlns="http://soa.fbk.eu/Goal" xmlns:obj="http://soa.fbk.eu/Object" xmlns:cnf="http://soa.fbk.eu/CNFFormula"
+  name="CarProcessGoal">
+  <result>
+	<formula>
+		<cnf:and>
+		 <cnf:orClause>
+            <obj:literal state="OK" objectID="CarHealth" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Retailer" objectID="CarLocation" />
+          </cnf:orClause>
+	</cnf:and>
+	</formula>
+  </result>
+</goal>

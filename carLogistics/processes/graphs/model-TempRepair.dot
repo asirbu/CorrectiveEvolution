@@ -1,0 +1,5 @@
+digraph G {
+  2 [ label="Temp assess damage" shape="box" ];
+  3 [ label="Temp fix damages" shape="box" ];
+  2 -> 3 [ label="" ];
+}

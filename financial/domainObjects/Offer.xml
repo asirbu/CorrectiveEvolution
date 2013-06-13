@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="Offer" xmlns="http://soa.fbk.eu/Object">
+  <states>
+    <state>NotExist</state>
+    <state>Selected</state>
+    <state>Created</state>
+    <state>Sent</state>
+    <state>SentBack</state>
+    <state>Accepted</state>
+    <state>Declined</state>
+    
+  </states>
+
+  <initialStates>
+    <state>NotExist</state>
+  </initialStates>
+
+  <events>
+      <event isControllable="true">select</event>
+     <event isControllable="true">create</event>
+     <event isControllable="true">send</event>
+     <event isControllable="true">receive</event>
+     <event isControllable="true">accept</event>
+     <event isControllable="true">cancel</event>
+     <event isControllable="true">decline</event>
+     
+     
+  </events>
+
+  <transitions>
+    <transition>
+      <startState>NotExist</startState>
+      <event>select</event>
+      <endState>Selected</endState>
+    </transition>
+    <transition>
+      <startState>Sent</startState>
+      <event>cancel</event>
+      <endState>Selected</endState>
+    </transition>
+    <transition>
+      <startState>SentBack</startState>
+      <event>cancel</event>
+      <endState>Selected</endState>
+    </transition>
+    <transition>
+      <startState>Selected</startState>
+      <event>select</event>
+      <endState>Selected</endState>
+    </transition>
+<transition>
+      <startState>Selected</startState>
+      <event>create</event>
+      <endState>Created</endState>
+    </transition>
+<transition>
+      <startState>Created</startState>
+      <event>send</event>
+      <endState>Sent</endState>
+    </transition>
+
+    <transition>
+      <startState>Sent</startState>
+      <event>receive</event>
+      <endState>SentBack</endState>
+    </transition>
+     <transition>
+      <startState>Sent</startState>
+      <event>accept</event>
+      <endState>Accepted</endState>
+    </transition>
+    
+    <transition>
+      <startState>Sent</startState>
+      <event>decline</event>
+      <endState>Declined</endState>
+    </transition>
+    <transition>
+      <startState>SentBack</startState>
+      <event>accept</event>
+      <endState>Accepted</endState>
+    </transition>
+    <transition>
+      <startState>SentBack</startState>
+      <event>decline</event>
+      <endState>Declined</endState>
+    </transition>
+  </transitions>
+</object>

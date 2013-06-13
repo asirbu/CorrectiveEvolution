@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<process name="FinancialProcess" xmlns="http://soa.fbk.eu/Process"
+	xmlns:obj="http://soa.fbk.eu/Object" xmlns:cnf="http://soa.fbk.eu/CNFFormula">
+	<activities />
+
+	<nodes>
+		<startNode nodeID="submitted" activity="A_SUBMITTED COMPLETE" />
+		<activityNode nodeID="partlySubmitted" activity="A_PARTLYSUBMITTED COMPLETE" />
+
+		<activityNode nodeID="preaccepted" activity="A_PREACCEPTED COMPLETE" />
+
+		<xorSplit nodeID="xorSplit1" />
+		<xorJoin nodeID="xorJoin1" />
+
+		<xorSplit nodeID="xorSplit2" />
+		<xorJoin nodeID="xorJoin2" />
+
+		<xorSplit nodeID="xorSplit3" />
+		<xorJoin nodeID="xorJoin3" />
+
+
+		<andSplit nodeID="andSplit1" />
+		<andJoin nodeID="andJoin1" />
+
+		<andSplit nodeID="andSplit2" />
+		<andJoin nodeID="andJoin2" />
+
+
+		<activityNode nodeID="fixLeadsSchedule" activity="W_Afhandelen leads SCHEDULE" />
+		<activityNode nodeID="fixLeadsStart" activity="W_Afhandelen leads START" />
+		<activityNode nodeID="fixLeadsComplete" activity="W_Afhandelen leads COMPLETE" />
+
+		<activityNode nodeID="fillInfoSchedule" activity="W_Completeren aanvraag SCHEDULE"></activityNode>
+		<activityNode nodeID="fillInfoStart" activity="W_Completeren aanvraag START" />
+
+		<activityNode nodeID="accepted" activity="A_ACCEPTED COMPLETE" />
+		<activityNode nodeID="offerSelected" activity="O_SELECTED COMPLETE" />
+		<activityNode nodeID="finalized" activity="A_FINALIZED COMPLETE" />
+
+		<activityNode nodeID="offerCreated" activity="O_CREATED COMPLETE" />
+		<activityNode nodeID="offerSent" activity="O_SENT COMPLETE" />
+		<activityNode nodeID="offerSentBack" activity="O_SENT_BACK COMPLETE" />
+
+		<activityNode nodeID="fillInfoComplete" activity="W_Completeren aanvraag COMPLETE" />
+
+		<activityNode nodeID="callAfterSchedule" activity="W_Nabellen offertes SCHEDULE" />
+		<activityNode nodeID="callAfterStart" activity="W_Nabellen offertes START" />
+		<activityNode nodeID="callAfterComplete" activity="W_Nabellen offertes COMPLETE" />
+
+		<activityNode nodeID="approved" activity="A_APPROVED COMPLETE" />
+		<activityNode nodeID="activated" activity="A_ACTIVATED COMPLETE" />
+		<activityNode nodeID="registered" activity="A_REGISTERED COMPLETE" />
+		<activityNode nodeID="offerAccepted" activity="O_ACCEPTED COMPLETE" />
+
+		<activityNode nodeID="assessSchedule" activity="W_Valideren aanvraag SCHEDULE" />
+		<activityNode nodeID="assessStart" activity="W_Valideren aanvraag START" />
+		<activityNode nodeID="assessComplete" activity="W_Valideren aanvraag COMPLETE" />
+
+		<activityNode nodeID="cancelled" activity="A_CANCELLED COMPLETE" />
+		<activityNode nodeID="fillInfoComplete2" activity="W_Completeren aanvraag COMPLETE" />
+
+		<activityNode nodeID="declined" activity="A_DECLINED COMPLETE" />
+		<endNode nodeID="end" activity="End" />
+	</nodes>
+
+	<edges>
+		<edge source="submitted" target="partlySubmitted" />
+
+		<edge source="partlySubmitted" target="xorSplit1" />
+
+		<edge source="xorSplit1" target="declined">
+			<condition>
+				<cnf:and>
+					<cnf:orClause>
+						<obj:literal state="PartlySubmitted" objectID="Application" />
+					</cnf:orClause>
+				</cnf:and>
+			</condition>
+		</edge>
+
+		<edge source="declined" target="xorJoin3" />
+
+		<edge source="xorSplit1" target="xorJoin1">
+			<condition>
+				<cnf:and>
+					<cnf:orClause>
+						<obj:literal state="PartlySubmitted" objectID="Application" />
+					</cnf:orClause>
+				</cnf:and>
+			</condition>
+		</edge>
+
+		<edge source="xorSplit1" target="fixLeadsSchedule">
+			<condition>
+				<cnf:and>
+					<cnf:orClause>
+						<obj:literal state="PartlySubmitted" objectID="Application" />
+					</cnf:orClause>
+				</cnf:and>
+			</condition>
+		</edge>
+
+		<edge source="fixLeadsSchedule" target="fixLeadsStart" />
+		<edge source="fixLeadsStart" target="xorJoin1" />
+
+		<edge source="xorJoin1" target="preaccepted" />
+
+
+		<edge source="preaccepted" target="fillInfoSchedule" />
+
+		<edge source="fillInfoSchedule" target="xorSplit2" />
+
+		<edge source="xorSplit2" target="xorJoin2" />
+		<edge source="xorSplit2" target="fixLeadsComplete">
+			<condition>
+				<cnf:and>
+					<cnf:orClause>
+						<obj:literal state="Started" objectID="Afhandelen_leads" />
+						<obj:literal state="Interrupted" objectID="Afhandelen_leads" />
+
+					</cnf:orClause>
+				</cnf:and>
+			</condition>
+		</edge>
+
+		<edge source="fixLeadsComplete" target="xorJoin2" />
+
+
+		<edge source="xorJoin2" target="fillInfoStart" />
+		<edge source="fillInfoStart" target="xorSplit3"></edge>
+
+		<edge source="xorSplit3" target="accepted" />
+		<edge source="xorSplit3" target="cancelled" />
+		<edge source="cancelled" target="fillInfoComplete2" />
+		<edge source="fillInfoComplete2" target="xorJoin3" />
+		<edge source="xorJoin3" target="end" />
+
+		<edge source="accepted" target="andSplit1"></edge>
+
+		<edge source="andSplit1" target="offerSelected" />
+		<edge source="andSplit1" target="finalized" />
+
+		<edge source="offerSelected" target="andJoin1" />
+		<edge source="finalized" target="andJoin1" />
+
+		<edge source="andJoin1" target="offerCreated" />
+
+		<edge source="offerCreated" target="offerSent" />
+		<edge source="offerSent" target="callAfterSchedule" />
+
+		<edge source="callAfterSchedule" target="fillInfoComplete" />
+
+		<edge source="fillInfoComplete" target="callAfterStart" />
+		<edge source="callAfterStart" target="offerSentBack" />
+
+		<edge source="offerSentBack" target="assessSchedule" />
+
+		<edge source="assessSchedule" target="callAfterComplete" />
+		<edge source="callAfterComplete" target="assessStart" />
+
+		<edge source="assessStart" target="approved" />
+		<edge source="approved" target="offerAccepted" />
+
+		<edge source="offerAccepted" target="andSplit2" />
+		<edge source="andSplit2" target="registered" />
+		<edge source="andSplit2" target="activated" />
+
+		<edge source="registered" target="andJoin2" />
+		<edge source="activated" target="andJoin2" />
+
+		<edge source="andJoin2" target="assessComplete" />
+
+		<edge source="assessComplete" target="xorJoin3" />
+
+	</edges>
+</process>

@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<activitySet xmlns="http://soa.fbk.eu/Process" xmlns:obj="http://soa.fbk.eu/Object"
+xmlns:cnf="http://soa.fbk.eu/CNFFormula">
+    
+    <activity name="A_SUBMITTED COMPLETE">
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="NotExist" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="submit" objectID="Application" />       
+      </effect>
+    </activity>
+    
+    <activity name="A_PARTLYSUBMITTED COMPLETE" >
+     <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Submitted" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="partlySubmit" objectID="Application" />       
+      </effect>
+    </activity>
+    
+     <activity name="A_PREACCEPTED COMPLETE">
+     <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="PartlySubmitted" objectID="Application" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Started" objectID="Afhandelen_leads" />
+            <obj:literal state="NotExist" objectID="Afhandelen_leads" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="preaccept" objectID="Application" />       
+      </effect>
+    </activity>
+    
+        <activity name="A_ACCEPTED COMPLETE" >
+        <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Started" objectID="Completeren_aanvraag" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+       <effect>
+        <obj:literal event="accept" objectID="Application" />       
+      </effect>
+    </activity>
+    
+    <activity name="A_FINALIZED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Accepted" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="finalize" objectID="Application" />       
+      </effect>
+    </activity>
+    
+     <activity name="A_APPROVED COMPLETE" >
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Assessing" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="approve" objectID="Application" />       
+      </effect>
+    </activity>
+    
+    <activity name="A_ACTIVATED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Approved" objectID="Application" />
+            <obj:literal state="Finalized" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="activate" objectID="Application" />       
+      </effect>
+    </activity>
+   
+   
+   
+    <activity name="A_REGISTERED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Approved" objectID="Application" />
+            <obj:literal state="Assessing" objectID="Application" />
+            <obj:literal state="Activated" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+    </activity>
+    
+     <activity name="A_DECLINED COMPLETE" >
+     <precondition>
+        <cnf:and>
+          <cnf:orClause>
+       <obj:literal state="PartlySubmitted" objectID="Application" />
+             <obj:literal state="NotEligible" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="decline" objectID="Application" />       
+      </effect>
+    </activity>
+    
+        <activity name="A_CANCELLED COMPLETE" >
+      <effect>
+        <obj:literal event="cancel" objectID="Application" />       
+      </effect>
+    </activity>
+    
+    <activity name="O_SELECTED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="NotExist" objectID="Offer" />
+            <obj:literal state="Selected" objectID="Offer" />
+            
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Accepted" objectID="Application" />
+            <obj:literal state="Finalized" objectID="Application" />
+            
+          </cnf:orClause>
+          
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="select" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+    <activity name="O_CREATED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Selected" objectID="Offer" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Finalized" objectID="Application" />
+          </cnf:orClause>
+          
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="create" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+    <activity name="O_SENT COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Created" objectID="Offer" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="send" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+     <activity name="O_SENT_BACK COMPLETE" >
+     <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Sent" objectID="Offer" />
+          </cnf:orClause>
+          <cnf:orClause>
+           <obj:literal state="Started" objectID="Nabellen_offertes" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="receive" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+     <activity name="O_CANCELLED COMPLETE" >
+     <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Sent" objectID="Offer" />
+             <obj:literal state="SentBack" objectID="Offer" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="cancel" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+    <activity name="O_ACCEPTED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+             <obj:literal state="Sent" objectID="Offer" />
+             <obj:literal state="SentBack" objectID="Offer" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="accept" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+    <activity name="O_DECLINED COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+             <obj:literal state="Sent" objectID="Offer" />
+             <obj:literal state="SentBack" objectID="Offer" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="decline" objectID="Offer" />       
+      </effect>
+    </activity>
+    
+    
+    <activity name="W_Afhandelen leads SCHEDULE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="NotExist" objectID="Afhandelen_leads" />
+          </cnf:orClause>
+           <cnf:orClause>
+            <obj:literal state="PartlySubmitted" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="schedule" objectID="Afhandelen_leads" />       
+      </effect>
+    </activity>
+    
+    <activity name="W_Afhandelen leads START">
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+          <obj:literal state="NotExist" objectID="Afhandelen_leads" />
+            <obj:literal state="Scheduled" objectID="Afhandelen_leads" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="start" objectID="Afhandelen_leads" />       
+      </effect>
+    </activity>
+
+  <activity name="W_Afhandelen leads COMPLETE">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+          <obj:literal state="Started" objectID="Afhandelen_leads" />
+           <obj:literal state="Interrupted" objectID="Afhandelen_leads" />
+        </cnf:orClause>
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="complete" objectID="Afhandelen_leads" />
+    </effect>
+  </activity>
+    
+    <activity name="W_Completeren aanvraag SCHEDULE" >
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="NotExist" objectID="Completeren_aanvraag" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Preaccepted" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="schedule" objectID="Completeren_aanvraag" />       
+      </effect>
+    </activity>
+    
+    <activity name="W_Completeren aanvraag START" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Scheduled" objectID="Completeren_aanvraag" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Preaccepted" objectID="Application" />
+            <obj:literal state="AddingInfo" objectID="Application" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="start" objectID="Completeren_aanvraag" />    
+         <obj:literal event="addInfo" objectID="Application" />   
+      </effect>
+    </activity>
+    
+    <activity name="W_Completeren aanvraag COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Started" objectID="Completeren_aanvraag" />
+            <obj:literal state="Interrupted" objectID="Completeren_aanvraag" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="complete" objectID="Completeren_aanvraag" /> 
+      </effect>
+    </activity>
+
+    <activity name="W_Nabellen offertes SCHEDULE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="NotExist" objectID="Nabellen_offertes" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Sent" objectID="Offer" />
+            <obj:literal state="SentBack" objectID="Offer" />
+            
+          </cnf:orClause>
+          
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="schedule" objectID="Nabellen_offertes" />       
+      </effect>
+    </activity>
+    
+  <activity name="W_Nabellen offertes START" >
+  <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Scheduled" objectID="Nabellen_offertes" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="start" objectID="Nabellen_offertes" />       
+      </effect>
+    </activity>
+    
+    <activity name="W_Nabellen offertes COMPLETE" >
+    <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Started" objectID="Nabellen_offertes" />
+            <obj:literal state="Interrupted" objectID="Nabellen_offertes" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="complete" objectID="Nabellen_offertes" />       
+      </effect>
+    </activity>
+
+  <activity name="W_Valideren aanvraag SCHEDULE">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+          <obj:literal state="NotExist" objectID="Valideren_aanvraag" />
+        </cnf:orClause>
+        <cnf:orClause>
+          <obj:literal state="SentBack" objectID="Offer" />
+        </cnf:orClause>
+        <cnf:orClause>
+          <obj:literal state="Finalized" objectID="Application" />
+        </cnf:orClause>
+        
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="schedule" objectID="Valideren_aanvraag" />
+    </effect>
+  </activity>
+
+  <activity name="W_Valideren aanvraag START">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+          <obj:literal state="Scheduled" objectID="Valideren_aanvraag" />
+        </cnf:orClause>
+        <cnf:orClause>
+          <obj:literal state="Finalized" objectID="Application" />
+        </cnf:orClause>
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="start" objectID="Valideren_aanvraag" />
+      <obj:literal event="assess" objectID="Application" />
+      
+    </effect>
+  </activity>
+
+  <activity name="W_Valideren aanvraag COMPLETE">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+          <obj:literal state="Started" objectID="Valideren_aanvraag" />
+           <obj:literal state="Interrupted" objectID="Valideren_aanvraag" />
+        </cnf:orClause>
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="complete" objectID="Valideren_aanvraag" />
+    </effect>
+  </activity>
+
+  <activity name="W_Nabellen incomplete dossiers SCHEDULE">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+          <obj:literal state="NotExist" objectID="Nabellen_incomplete_dossiers" />
+        </cnf:orClause>
+        <cnf:orClause>
+           <obj:literal state="Started" objectID="Valideren_aanvraag" />
+        </cnf:orClause>
+        
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="schedule" objectID="Nabellen_incomplete_dossiers" />
+    </effect>
+  </activity>
+
+  <activity name="W_Nabellen incomplete dossiers START">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+        <obj:literal state="NotExist" objectID="Nabellen_incomplete_dossiers" />
+          <obj:literal state="Scheduled" objectID="Nabellen_incomplete_dossiers" />
+        </cnf:orClause>
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="start" objectID="Nabellen_incomplete_dossiers" />
+    </effect>
+  </activity>
+
+  <activity name="W_Nabellen incomplete dossiers COMPLETE">
+    <precondition>
+      <cnf:and>
+        <cnf:orClause>
+          <obj:literal state="Started" objectID="Nabellen_incomplete_dossiers" />
+        </cnf:orClause>
+      </cnf:and>
+    </precondition>
+    <effect>
+      <obj:literal event="complete" objectID="Nabellen_incomplete_dossiers" />
+    </effect>
+  </activity>
+  
+  <activity name="W_Beoordelen fraude SCHEDULE"></activity>
+  <activity name="W_Beoordelen fraude START"></activity>
+  <activity name="W_Beoordelen fraude COMPLETE"></activity>
+
+  <activity name="W_Wijzigen contractgegevens SCHEDULE"></activity> 
+  
+  <activity name="End">
+  </activity>  
+  </activitySet>
+ 

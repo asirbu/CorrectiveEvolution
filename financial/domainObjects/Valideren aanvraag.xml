@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="Valideren_aanvraag" xmlns="http://soa.fbk.eu/Object">
+  <states>
+    <state>NotExist</state>
+    <state>Scheduled</state>
+    <state>Started</state>
+    <state>Completed</state>
+    <state>Interrupted</state>
+  </states>
+
+  <initialStates>
+    <state>NotExist</state>
+  </initialStates>
+
+  <events>
+     <event isControllable="true">schedule</event>
+     <event isControllable="true">start</event>
+     <event isControllable="true">complete</event>
+     <event isControllable="false">interrupt</event>
+     
+  </events>
+  
+  <transitions>
+  <transition>
+            <startState>NotExist</startState>
+            <event>schedule</event>
+            <endState>Scheduled</endState>
+        </transition>
+        <transition>
+            <startState>Scheduled</startState>
+            <event>start</event>
+            <endState>Started</endState>
+        </transition>
+        <transition>
+            <startState>Started</startState>
+            <event>complete</event>
+            <endState>Completed</endState>
+        </transition>
+        <transition>
+            <startState>Started</startState>
+            <event>interrupt</event>
+            <endState>Interrupted</endState>
+        </transition>
+        <transition>
+            <startState>Interrupted</startState>
+            <event>complete</event>
+            <endState>Scheduled</endState>
+        </transition>
+        
+  </transitions>
+</object>

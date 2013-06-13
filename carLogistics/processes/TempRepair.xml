@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<process xmlns="http://soa.fbk.eu/Process" xmlns:obj="http://soa.fbk.eu/Object" xmlns:cnf="http://soa.fbk.eu/CNFFormula"
+  name="TempRepair">
+  <activities>
+    <activity name="Temp assess damage">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Damaged" objectID="CarHealth" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="diagnose" objectID="CarHealth" />
+        <obj:literal event="addT" objectID="Schedule" />
+      </effect>
+    </activity>
+
+    <activity name="Temp fix damages">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Storage" objectID="CarLocation" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Pending" objectID="Schedule" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="move2Tt" objectID="CarLocation" />
+        <obj:literal event="repair" objectID="CarHealth" />
+        <obj:literal event="done" objectID="Schedule" />
+      </effect>
+    </activity>
+
+  </activities>
+
+  <nodes>
+    <activityNode nodeID="node7" activity="Temp assess damage" />
+    <activityNode nodeID="node8" activity="Temp fix damages" />
+  </nodes>
+  
+  <edges>
+    <edge source="node7" target="node8" />
+  </edges>
+</process>

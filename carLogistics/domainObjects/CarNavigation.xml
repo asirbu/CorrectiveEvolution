@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="CarNavigation" xmlns="http://soa.fbk.eu/Object">
+    <states>
+        <state>NoRoute</state>
+        <state>Route</state>
+    </states>
+    
+    <initialStates>
+        <state>NoRoute</state>
+    </initialStates>
+    
+    <events>
+        <event isControllable="true">show</event>
+        <event isControllable="true">arrive</event>
+    </events>
+    
+    <transitions>
+        <transition>
+            <startState>NoRoute</startState>
+            <event>show</event>
+            <endState>Route</endState>
+        </transition>
+        <transition>
+            <startState>Route</startState>
+            <event>arrive</event>
+            <endState>NoRoute</endState>
+        </transition>
+    </transitions>
+</object>

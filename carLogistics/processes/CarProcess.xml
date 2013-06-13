@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<process name="CarProcess" xmlns="http://soa.fbk.eu/Process" xmlns:obj="http://soa.fbk.eu/Object" 
+xmlns:cnf="http://soa.fbk.eu/CNFFormula">
+  <activities>
+    <activity name="Show directions to storage">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Damaged" objectID="CarHealth" isNegated="true" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="NoRoute" objectID="CarNavigation" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="show" objectID="CarNavigation" />
+      </effect>
+    </activity>
+
+    <activity name="At storage">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Damaged" objectID="CarHealth" isNegated="true" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Route" objectID="CarNavigation" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="arrive" objectID="CarNavigation" />
+        <obj:literal event="move2Stg" objectID="CarLocation" />
+      </effect>
+    </activity>
+
+    <activity name="Receive delivery order">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Damaged" objectID="CarHealth" isNegated="true" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="NotExist" objectID="DeliveryOrder" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="create" objectID="DeliveryOrder" />
+        <obj:literal event="addT" objectID="Schedule" />
+      </effect>
+    </activity>
+
+    <activity name="Fix pending treatments">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="Damaged" objectID="CarHealth" isNegated="true" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Storage" objectID="CarLocation" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Pending" objectID="Schedule" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="move2Tt" objectID="CarLocation" />
+        <obj:literal event="repair" objectID="CarHealth" />
+        <obj:literal event="done" objectID="Schedule" />
+      </effect>
+    </activity>
+
+    <activity name="Deliver to retailer">
+      <precondition>
+        <cnf:and>
+          <cnf:orClause>
+            <obj:literal state="OK" objectID="CarHealth" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Treatment" objectID="CarLocation" />
+          </cnf:orClause>
+          <cnf:orClause>
+            <obj:literal state="Empty" objectID="Schedule" />
+          </cnf:orClause>
+        </cnf:and>
+      </precondition>
+      <effect>
+        <obj:literal event="move2Ret" objectID="CarLocation" />
+      </effect>
+    </activity>
+
+  </activities>
+
+  <nodes>
+    <startNode nodeID="start" />
+    <activityNode nodeID="node1" activity="Show directions to storage" />
+    <activityNode nodeID="node2" activity="At storage" />
+    <activityNode nodeID="node3" activity="Receive delivery order" />
+    <activityNode nodeID="node4" activity="Fix pending treatments" />
+    <activityNode nodeID="node5" activity="Deliver to retailer" />
+    <endNode nodeID="end" />
+  </nodes>
+  
+  <edges>
+    <edge source="start" target="node1" />
+    <edge source="node1" target="node2" />
+    <edge source="node2" target="node3" />
+    <edge source="node3" target="node4" />
+    <edge source="node4" target="node5" />
+    <edge source="node5" target="end" />
+  </edges>
+</process>

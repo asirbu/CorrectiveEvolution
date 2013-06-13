@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="CarHealth" xmlns="http://soa.fbk.eu/Object">
+    <states>
+        <state>OK</state>
+        <state>Damaged</state>
+        <state>Diagnosed</state>
+    </states>
+    
+    <initialStates>
+        <state>OK</state>
+    </initialStates>
+    
+    <events>
+        <event isControllable="true">repair</event>
+        <event isControllable="false">damage</event>
+        <event isControllable="true">diagnose</event>
+    </events>
+    
+    <transitions>
+        <transition>
+            <startState>OK</startState>
+            <event>repair</event>
+            <endState>OK</endState>
+        </transition>
+        <transition>
+            <startState>OK</startState>
+            <event>damage</event>
+            <endState>Damaged</endState>
+        </transition>
+        <transition>
+            <startState>Damaged</startState>
+            <event>diagnose</event>
+            <endState>Diagnosed</endState>
+        </transition>
+        <transition>
+            <startState>Diagnosed</startState>
+            <event>damage</event>
+            <endState>Damaged</endState>
+        </transition>
+        <transition>
+            <startState>Diagnosed</startState>
+            <event>repair</event>
+            <endState>OK</endState>
+        </transition>
+    </transitions>
+</object>

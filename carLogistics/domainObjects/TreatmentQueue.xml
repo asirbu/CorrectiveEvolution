@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="TreatmentQueue" xmlns="http://soa.fbk.eu/Object">
+    <states>
+        <state>Empty</state>
+      <!--  <state>P10</state>
+        <state>P20</state>
+        <state>P30</state>
+         <state>P40</state>
+        <state>P50</state>
+        <state>P60</state>
+        <state>P70</state>
+        <state>P80</state> -->
+        <state>P90</state>
+        <state>Full</state>
+    </states>
+    
+    <initialStates></initialStates>
+    
+    <events>
+        <event isControllable="false">enqueue</event>
+        <event isControllable="false">dequeue</event>
+    </events>
+    
+    <transitions>
+       <!--  <transition>
+     <startState>Empty</startState>
+            <event>enqueue</event>
+            <endState>P10</endState>
+        </transition>
+        <transition>
+            <startState>P10</startState>
+            <event>enqueue</event>
+            <endState>P20</endState>
+        </transition>
+        <transition>
+            <startState>P20</startState>
+            <event>enqueue</event>
+            <endState>P30</endState>
+        </transition> -->
+        <transition>
+            <startState>P90</startState>
+            <event>enqueue</event>
+            <endState>Full</endState>
+        </transition>
+    </transitions>
+</object>

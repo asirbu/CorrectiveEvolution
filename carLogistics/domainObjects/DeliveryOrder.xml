@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object name="DeliveryOrder" xmlns="http://soa.fbk.eu/Object">
+    <states>
+        <state>NotExist</state>
+        <state>Created</state>
+    </states>
+    
+    <initialStates>
+        <state>NotExist</state>
+    </initialStates>
+    
+    <events>
+        <event isControllable="true">create</event>
+    </events>
+    
+    <transitions>
+        <transition>
+            <startState>NotExist</startState>
+            <event>create</event>
+            <endState>Created</endState>
+        </transition>
+    </transitions>
+</object>
