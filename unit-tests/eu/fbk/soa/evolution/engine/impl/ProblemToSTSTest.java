@@ -36,102 +36,27 @@ import eu.fbk.soa.process.node.XorSplit;
 public class ProblemToSTSTest {
 
 	private ProcessModel model;
-
+	
 	private Correction correction;
 	
-	private Set<Condition> conds;
-
-	private List<Activity> activities;
-
-	private List<ProcessNode> actList;
-
 	private ProblemToSTS pb2sts;
 	
+	private InputProblem problem;
 	
 	@Before
 	public void setUpProblem() {
 		PropertyConfigurator.configure("log4j.properties");
 
-		model = createProcessModel();
-
+		problem = new InputProblem();
+		model = problem.getProcessModel();
+		correction = problem.getCorrection();
+		
 		List<Correction> corrections = new ArrayList<Correction>();
-		correction = this.createCorrection();
 		corrections.add(correction);
-
-		conds = new HashSet<Condition>();
-		conds.add(new Condition(correction.getCondition(), 1));
-		pb2sts = new ProblemToSTS(model, corrections, conds);
+		
+		pb2sts = new ProblemToSTS(model, corrections, problem.getConditions());
 	}
 
-	/*
-	 * Creating the process:
-	 * A0 -> XorSplit -> A1 -> A2 -> XorJoin -> A4
-	 * 				  -> A3		  ->		
-	 */
-	private ProcessModel createProcessModel() {
-		this.activities = new ArrayList<Activity>();
-
-		Set<ProcessNode> nodes = new HashSet<ProcessNode>();
-		actList = new ArrayList<ProcessNode>();
-		StartNode start = null;
-
-		for (int i = 0; i <= 4; i++) {
-			Activity ai = new Activity("A" + i, new StateFormula(), new Effect());
-			activities.add(ai);
-			ProcessNode node;
-			if (i == 0) {
-				start = new StartNode(ai);
-				node = start;
-			} else {
-				node = new ActivityNode(ai);
-			}
-			actList.add(node);
-			nodes.add(node);
-		}
-		
-		XorSplit xorsplit = new XorSplit();
-		nodes.add(xorsplit);
-		
-		XorJoin xorjoin = new XorJoin();
-		nodes.add(xorjoin);
-		
-		ProcessModel model = new DefaultProcessModel("TestProcess", nodes);
-
-		model.addEdge(start, xorsplit);
-		model.addEdge(xorsplit, actList.get(1));
-		model.addEdge(xorsplit, actList.get(3));
-		model.addEdge(actList.get(1), actList.get(2));
-		model.addEdge(actList.get(2), xorjoin);
-		model.addEdge(actList.get(3), xorjoin);		
-		model.addEdge(xorjoin, actList.get(4));
-		return model;
-	}
-
-
-	private Correction createCorrection() {
-		DomainObject obj = new DomainObject("Obj");
-		ObjectState state1 = new ObjectState("State1");
-		StateFormula cond = new StateFormula(new StateLiteral(obj, state1));
-
-		int fromActIndex = 1;
-		List<Activity> executedActs = new ArrayList<Activity>();
-		for (int i = 0; i <= fromActIndex; i++) {
-			executedActs.add(activities.get(i));
-		}
-		Trace trace = new Trace(executedActs);
-
-		ActivityNode fromNode = (ActivityNode) actList.get(fromActIndex);
-		ActivityNode toNode = (ActivityNode) actList.get(fromActIndex + 1);
-
-		Set<ProcessNode> adaptNodes = new HashSet<ProcessNode>();
-		adaptNodes.add(new ActivityNode("Fix"));
-		ProcessModel adaptPM = new DefaultProcessModel("AdaptationModel", adaptNodes);
-		Adaptation adaptation = new Adaptation(adaptPM, fromNode, toNode);
-
-		Correction correction = new Correction(Type.STRICT, trace, cond, adaptation);
-		return correction;
-	}
-	
 
 	@Test
 	public void testModelToSTS() {

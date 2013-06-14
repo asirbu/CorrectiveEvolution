@@ -3,9 +3,11 @@ package eu.fbk.soa.evolution.sts.minimizer;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,14 +19,29 @@ import eu.fbk.soa.evolution.sts.impl.DefaultAction;
 import eu.fbk.soa.evolution.sts.impl.DefaultSTS;
 import eu.fbk.soa.evolution.sts.impl.DefaultState;
 import eu.fbk.soa.evolution.sts.impl.DefaultTransition;
+import eu.fbk.soa.util.ConfigUtils;
 import eu.fbk.soa.util.IOUtils;
 
 public class TraceEquivalenceMinimizerTest {
 
 	private STS mySTS;
 	
-	@Before
-	public void setUpSimpleSTS() {
+	private String outDir;
+	
+	@Before 
+	public void setUp() throws IOException {
+		PropertyConfigurator.configure("log4j.properties");
+		
+		setUpSimpleSTS();
+		
+		outDir = ConfigUtils.getProperty("outputDir");
+		File outFile = new File(outDir);
+		if (!outFile.exists()) {
+			outFile.mkdirs();
+		}
+	}
+	
+	private void setUpSimpleSTS() {
 		Set<State> states = new HashSet<State>();
 		State initialState = null;
 		Set<Action> inputActions = new HashSet<Action>();
@@ -55,7 +72,7 @@ public class TraceEquivalenceMinimizerTest {
 	@Test
 	public void testMinimizeAlreadyMinimalSTS() {		
 		TraceEquivalenceMinimizer minimizer = new TraceEquivalenceMinimizer();
-		File traceMin = new File("output" + File.separator + "min.dot");	
+		File traceMin = new File(outDir + File.separator + "min.dot");	
 		minimizer.minimizeSTS(mySTS, traceMin);
 		
 		STS resultSTS = IOUtils.readSTSFromFile(traceMin);
@@ -80,7 +97,7 @@ public class TraceEquivalenceMinimizerTest {
 		mySTS.addTransition(new DefaultTransition(newState, trans2.getAction(), trans2.getTarget()));
 		
 		TraceEquivalenceMinimizer minimizer = new TraceEquivalenceMinimizer();
-		File traceMin = new File("output" + File.separator + "min.dot");	
+		File traceMin = new File(outDir + File.separator + "min.dot");	
 		minimizer.minimizeSTS(mySTS, traceMin);
 		
 		STS resultSTS = IOUtils.readSTSFromFile(traceMin);

@@ -1,5 +1,6 @@
 package eu.fbk.soa.evolution.sts.nusmv;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,11 @@ public class PathExplorer {
 		}
 		if (!sts.getStates().isEmpty()) {
 			logger.debug("Obtained STS:\n" + sts.toDot());
+		}
+		
+		if (!Boolean.getBoolean(ConfigUtils.getProperty("intermediaryFiles"))) {
+			File nusmvOutput = new File(outFile);
+			nusmvOutput.deleteOnExit();
 		}
 		return sts;
 	}

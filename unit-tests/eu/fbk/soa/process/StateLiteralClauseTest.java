@@ -2,6 +2,8 @@ package eu.fbk.soa.process;
 
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.junit.Before;
 import org.junit.Test;
 
 import eu.fbk.soa.process.domain.DomainObject;
@@ -10,6 +12,11 @@ import eu.fbk.soa.process.domain.StateLiteral;
 
 public class StateLiteralClauseTest {
 
+	@Before
+	public void setUp() {
+		PropertyConfigurator.configure("log4j.properties");
+	}
+	
 	@Test
 	public void testStringRepresentation() {
 		DomainObject obj1 = new DomainObject("Object_1");

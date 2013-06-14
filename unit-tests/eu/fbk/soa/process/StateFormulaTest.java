@@ -22,9 +22,8 @@ public class StateFormulaTest {
 	
 	private StateFormula formula;
 
-	private List<StateLiteral> literals;
-
-
+	private List<StateLiteral> literals;	
+	
 	/*
 	 * Setting up a domain object Obj1 with 3 states: {state0, state1, state2}
 	 * and the formula:  state0(Obj1) | not(state1(Obj1))

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,14 +33,19 @@ public class TraceReplayTest {
 	
 	private Set<Activity> activities;
 	
-
+	@Before
+	public void setUp() {
+		PropertyConfigurator.configure("log4j.properties");
+		createProcessModel();
+	}
+	
+	
 	/*
 	 * Creating the process:
 	 * A0 -> A1 -> XorSplit -> A2 -> A3 -> XorJoin -> AndSplit -> A5 -> A6 -> AndJoin -> A8
 	 * 						-> A4		->						-> A7 		->
 	 */
-	@Before
-	public void createProcessModel() {
+	private void createProcessModel() {
 		this.activities = new HashSet<Activity>();
 		
 		Set<ProcessNode> nodes = new HashSet<ProcessNode>();

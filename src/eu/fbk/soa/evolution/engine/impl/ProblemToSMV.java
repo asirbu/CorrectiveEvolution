@@ -113,24 +113,27 @@ public class ProblemToSMV {
 		actionTable = pb2STS.getActionTable();
 		
 		sts2smv = new STSToSMV(modelIDs, objIDs, properCondIDs, getIDToSTS());
-		String translation = translateOriginalModel();
+		
+		StringBuffer translation = new StringBuffer();
+		translation.append(translateOriginalModel());
 		
 		int index = 1; 
 		for (Correction corr : corrections) {
-			translation += translateTrace(corr.getTrace(), index);
-			translation += translateAdaptation(corr);
-			translation += translateCondition(corr.getCondition(), index);
+			translation.append(translateTrace(corr.getTrace(), index));
+			translation.append(translateAdaptation(corr));
+			translation.append(translateCondition(corr.getCondition(), index));
 			index++;
 		}
 		
-		translation += translateSemaphore();
+		translation.append(translateSemaphore());
 		for (DomainObject object : objIDs.keySet()) {
-			translation += translateDomainObject(object);
+			translation.append(translateDomainObject(object));
 		}
 		
-		translation += this.createMainModule();
-		return translation;	
+		translation.append(this.createMainModule());
+		return translation.toString();	
 	}
+	
 	
 	public Map<String, STS> getIDToSTS() {
 		Map<String, STS> id2STS = new HashMap<String, STS>();
