@@ -1,16 +1,14 @@
-package eu.fbk.soa.evolution.engine.impl;
+package eu.fbk.soa.evolution.engine.impl.test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.PropertyConfigurator;
-import org.junit.Before;
-
 import eu.fbk.soa.evolution.Correction;
 import eu.fbk.soa.evolution.Correction.Type;
+import eu.fbk.soa.evolution.engine.impl.Condition;
+import eu.fbk.soa.evolution.engine.impl.ProblemToSTS;
 import eu.fbk.soa.process.Activity;
 import eu.fbk.soa.process.Adaptation;
 import eu.fbk.soa.process.DefaultProcessModel;
@@ -29,7 +27,7 @@ import eu.fbk.soa.process.node.StartNode;
 import eu.fbk.soa.process.node.XorJoin;
 import eu.fbk.soa.process.node.XorSplit;
 
-public class InputProblem {
+public class TestInputProblem {
 
 	private ProcessModel model;
 
@@ -52,7 +50,7 @@ public class InputProblem {
 	private ProblemToSTS pb2sts;
 	
 	
-	public InputProblem() {
+	public TestInputProblem() {
 		model = createProcessModel();
 
 		List<Correction> corrections = new ArrayList<Correction>();

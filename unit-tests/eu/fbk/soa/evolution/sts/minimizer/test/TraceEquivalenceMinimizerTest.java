@@ -1,4 +1,4 @@
-package eu.fbk.soa.evolution.sts.minimizer;
+package eu.fbk.soa.evolution.sts.minimizer.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,6 +19,7 @@ import eu.fbk.soa.evolution.sts.impl.DefaultAction;
 import eu.fbk.soa.evolution.sts.impl.DefaultSTS;
 import eu.fbk.soa.evolution.sts.impl.DefaultState;
 import eu.fbk.soa.evolution.sts.impl.DefaultTransition;
+import eu.fbk.soa.evolution.sts.minimizer.TraceEquivalenceMinimizer;
 import eu.fbk.soa.util.ConfigUtils;
 import eu.fbk.soa.util.IOUtils;
 

@@ -1,4 +1,4 @@
-package eu.fbk.soa.evolution.impl;
+package eu.fbk.soa.evolution.engine.impl.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.log4j.PropertyConfigurator;
 
 import eu.fbk.soa.evolution.Correction;
-import eu.fbk.soa.evolution.InputConstructor;
 import eu.fbk.soa.evolution.engine.impl.ProblemToSMV;
+import eu.fbk.soa.evolution.test.InputConstructor;
 import eu.fbk.soa.process.ProcessModel;
 
 public class ProblemToSMVFuncTest {

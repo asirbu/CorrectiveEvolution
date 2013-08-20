@@ -1,6 +1,7 @@
-package eu.fbk.soa.evolution.engine.impl;
+package eu.fbk.soa.evolution.engine.impl.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,40 +10,27 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
 import eu.fbk.soa.evolution.Correction;
-import eu.fbk.soa.evolution.Correction.Type;
+import eu.fbk.soa.evolution.engine.impl.Condition;
+import eu.fbk.soa.evolution.engine.impl.ProblemToSMV;
+import eu.fbk.soa.evolution.engine.impl.ProblemToSTS;
 import eu.fbk.soa.evolution.sts.Action;
 import eu.fbk.soa.evolution.sts.STS;
 import eu.fbk.soa.evolution.sts.State;
 import eu.fbk.soa.evolution.sts.Transition;
 import eu.fbk.soa.evolution.sts.nusmv.PathExplorer;
-import eu.fbk.soa.process.Activity;
-import eu.fbk.soa.process.Adaptation;
-import eu.fbk.soa.process.DefaultProcessModel;
-import eu.fbk.soa.process.Effect;
 import eu.fbk.soa.process.ProcessModel;
-import eu.fbk.soa.process.StateFormula;
-import eu.fbk.soa.process.Trace;
-import eu.fbk.soa.process.domain.DomainObject;
-import eu.fbk.soa.process.domain.ObjectState;
-import eu.fbk.soa.process.domain.StateLiteral;
-import eu.fbk.soa.process.node.ActivityNode;
-import eu.fbk.soa.process.node.ProcessNode;
-import eu.fbk.soa.process.node.StartNode;
-import eu.fbk.soa.process.node.XorJoin;
-import eu.fbk.soa.process.node.XorSplit;
 import eu.fbk.soa.util.ConfigUtils;
 import eu.fbk.soa.util.IOUtils;
 
 public class ProblemToSMVTest {
 
-	private InputProblem problem;
+	private TestInputProblem problem;
 	
 	private ProcessModel model;
 	
@@ -53,7 +41,7 @@ public class ProblemToSMVTest {
 	@Before
 	public void setUpProblem() {
 		PropertyConfigurator.configure("log4j.properties");
-		problem = new InputProblem();
+		problem = new TestInputProblem();
 		
 		model = problem.getProcessModel();
 		

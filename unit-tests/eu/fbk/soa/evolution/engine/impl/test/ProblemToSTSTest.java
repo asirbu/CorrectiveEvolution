@@ -1,10 +1,9 @@
-package eu.fbk.soa.evolution.engine.impl;
+package eu.fbk.soa.evolution.engine.impl.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,25 +12,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eu.fbk.soa.evolution.Correction;
-import eu.fbk.soa.evolution.Correction.Type;
+import eu.fbk.soa.evolution.engine.impl.ProblemToSTS;
 import eu.fbk.soa.evolution.sts.STS;
 import eu.fbk.soa.evolution.sts.State;
 import eu.fbk.soa.evolution.sts.Transition;
 import eu.fbk.soa.process.Activity;
-import eu.fbk.soa.process.Adaptation;
-import eu.fbk.soa.process.DefaultProcessModel;
-import eu.fbk.soa.process.Effect;
 import eu.fbk.soa.process.ProcessModel;
-import eu.fbk.soa.process.StateFormula;
 import eu.fbk.soa.process.Trace;
-import eu.fbk.soa.process.domain.DomainObject;
-import eu.fbk.soa.process.domain.ObjectState;
-import eu.fbk.soa.process.domain.StateLiteral;
-import eu.fbk.soa.process.node.ActivityNode;
-import eu.fbk.soa.process.node.ProcessNode;
-import eu.fbk.soa.process.node.StartNode;
-import eu.fbk.soa.process.node.XorJoin;
-import eu.fbk.soa.process.node.XorSplit;
 
 public class ProblemToSTSTest {
 
@@ -41,13 +28,13 @@ public class ProblemToSTSTest {
 	
 	private ProblemToSTS pb2sts;
 	
-	private InputProblem problem;
+	private TestInputProblem problem;
 	
 	@Before
 	public void setUpProblem() {
 		PropertyConfigurator.configure("log4j.properties");
 
-		problem = new InputProblem();
+		problem = new TestInputProblem();
 		model = problem.getProcessModel();
 		correction = problem.getCorrection();
 		

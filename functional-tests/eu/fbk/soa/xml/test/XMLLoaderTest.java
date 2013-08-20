@@ -1,4 +1,4 @@
-package eu.fbk.soa.xml;
+package eu.fbk.soa.xml.test;
 
 import java.io.File;
 import java.util.Set;
@@ -7,6 +7,8 @@ import eu.fbk.soa.process.Activity;
 import eu.fbk.soa.process.ProcessModel;
 import eu.fbk.soa.process.domain.DomainObject;
 import eu.fbk.soa.util.IOUtils;
+import eu.fbk.soa.xml.XMLLoader;
+import eu.fbk.soa.xml.XMLParsingException;
 
 
 public class XMLLoaderTest {

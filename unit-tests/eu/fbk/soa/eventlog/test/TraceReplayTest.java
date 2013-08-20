@@ -1,4 +1,4 @@
-package eu.fbk.soa.eventlog;
+package eu.fbk.soa.eventlog.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,6 +12,8 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
+import eu.fbk.soa.eventlog.TraceDifference;
+import eu.fbk.soa.eventlog.TraceReplay;
 import eu.fbk.soa.process.Activity;
 import eu.fbk.soa.process.DefaultProcessModel;
 import eu.fbk.soa.process.Effect;

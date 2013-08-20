@@ -1,4 +1,4 @@
-package eu.fbk.soa.util;
+package eu.fbk.soa.util.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,6 +10,7 @@ import org.junit.Test;
 import eu.fbk.soa.process.Activity;
 import eu.fbk.soa.process.Effect;
 import eu.fbk.soa.process.StateFormula;
+import eu.fbk.soa.util.ArrayUtils;
 
 public class ArrayUtilsTest {
 	

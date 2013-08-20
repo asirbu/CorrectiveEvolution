@@ -1,4 +1,4 @@
-package eu.fbk.soa.util;
+package eu.fbk.soa.util.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+
+import eu.fbk.soa.util.StringUtils;
 
 public class StringUtilsTest {
 

@@ -1,4 +1,4 @@
-package eu.fbk.soa.process;
+package eu.fbk.soa.process.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,6 +12,8 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
+import eu.fbk.soa.process.StateFormula;
+import eu.fbk.soa.process.StateLiteralClause;
 import eu.fbk.soa.process.domain.DomainObject;
 import eu.fbk.soa.process.domain.ObjectEvent;
 import eu.fbk.soa.process.domain.ObjectState;

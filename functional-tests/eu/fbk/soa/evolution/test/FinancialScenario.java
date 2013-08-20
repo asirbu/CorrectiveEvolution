@@ -1,4 +1,4 @@
-package eu.fbk.soa.evolution;
+package eu.fbk.soa.evolution.test;
 
 import java.io.File;
 import java.util.HashMap;
@@ -7,26 +7,26 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.deckfour.xes.in.XesXmlParser;
 import org.deckfour.xes.model.XLog;
 
 import eu.fbk.soa.eventlog.CorrectionGenerator;
 import eu.fbk.soa.eventlog.LogExplorer;
 import eu.fbk.soa.eventlog.TraceDifference;
+import eu.fbk.soa.evolution.Correction;
+import eu.fbk.soa.evolution.CorrectiveEvolution;
 import eu.fbk.soa.process.Activity;
 import eu.fbk.soa.process.GoalWithPriorities;
 import eu.fbk.soa.process.ProcessModel;
 import eu.fbk.soa.process.domain.DomainObject;
-import eu.fbk.soa.util.ConfigUtils;
 import eu.fbk.soa.util.IOUtils;
 import eu.fbk.soa.xml.XMLLoader;
 import eu.fbk.soa.xml.XMLParsingException;
 
 
-public class FinancialScenarioTest {
+public class FinancialScenario {
 	
-	private static Logger logger = Logger.getLogger(FinancialScenarioTest.class);
+	private static Logger logger = Logger.getLogger(FinancialScenario.class);
 	
 	private CorrectionGenerator corrGenerator;
 		
@@ -38,7 +38,11 @@ public class FinancialScenarioTest {
 	
 	private String outputPath;
 	
-	public FinancialScenarioTest() {}
+	private String generalOutPath = "";
+	
+	public FinancialScenario(String outPath) {
+		this.generalOutPath = outPath;
+	}
 	
 	private void init(String scenario, String processName, String logName) throws Exception {
 		this.loadModels(scenario, processName);
@@ -52,8 +56,7 @@ public class FinancialScenarioTest {
 		
 		corrGenerator = new CorrectionGenerator(model, allActivities, logExplorer);
 		
-		String outDir = ConfigUtils.getProperty("outputDir");
-		outputPath = outDir + File.separator + scenario + File.separator;
+		outputPath = generalOutPath + scenario + File.separator;
 		
 		evolution = new CorrectiveEvolution(outputPath);
 //		evolution.enableExperimentMode();
@@ -66,6 +69,7 @@ public class FinancialScenarioTest {
 		
 		model = XMLLoader.loadProcessModel(scenario, processName + ".xml", objects, allActivities);
 	}
+	
 	
 	public void testFinancialRelaxed() throws Exception {
 		init("financial", "financial", "financial_log (first month)");
@@ -115,15 +119,5 @@ public class FinancialScenarioTest {
 		IOUtils.createImage(dotFilePath, pictFilePath);
 	}
 	
-
-	public static void main(String[] args) throws Exception {
-		PropertyConfigurator.configure("log4j.properties");
-        
-		FinancialScenarioTest test = new FinancialScenarioTest();
-		
-		test.testFinancialRelaxed();
-		
-//		test.testFinancialStrict();
-	}
 	
 }

@@ -1,4 +1,4 @@
-package eu.fbk.soa.evolution;
+package eu.fbk.soa.evolution.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import eu.fbk.soa.evolution.Correction;
 import eu.fbk.soa.evolution.Correction.Type;
 import eu.fbk.soa.process.Activity;
 import eu.fbk.soa.process.Adaptation;

@@ -30,24 +30,46 @@ The config.properties file contains also an 'intermediateFiles' parameter. If th
 the various steps performed by the tool (encoding all the inputs into a '.smv' file, the output from NuSMV, 
 respectively WSynth, the minimized STS) will all be recorded as separate files.
 
+
+----------------------
+Building instructions:
+----------------------
+
+You will find the Ant build file "build.xml" in the root directory. 
+If you don't already have Ant installed, you can download it from http://ant.apache.org/
+
+After running the main target, a file "correctiveEvolution.jar" will be created and placed in the
+root directory. 
+
+
 ---------------------
 Running instructions:
 ---------------------
 
-The prototype contains two different scenarios: 
+The prototype contains three different scenarios: 
 * a car logistics scenario (in folder 'carLogistics'). The process model concerns the handling of a car
-as it arrives from the manufacturer at a sea port, and until it is delivered to the retailer.
+as it arrives from the manufacturer at a sea port, and until it is delivered to the retailer. 
+In this scenario there are two corrections  
+which are fixed and provided as input. These corrections are alternatively set to "strict" or "relaxed",
+and should determine four different evolved process models.
 * a scenario from the financial domain (in folder 'financial'), designed based on a real event log.
-The process model represents a loan or overdraft application process.  
+The process model represents a loan or overdraft application process. 
+In this scenario, the corrections are not fixed, they are generated based on the event log. 
+* a basic scenario. This scenario is a simplified car logistics scenario, 
+designed for testing purposes.
 
-The first scenario can be tested by running eu.fbk.soa.evolution.CarLogisticsScenarioTest (in the
-'functional-tests' folder). In this scenario, there are two
-corrections, which are fixed and provided as input.
+To test each of the three scenarios, set the scenario parameter to "carLogistics", 
+"financial" (default), or "basic" as in the following:
 
-The second scenario can be tested by running eu.fbk.soa.evolution.FinancialScenarioTest (same 
-'functional-tests' folder). In this scenario, the corrections are generated based on the event log. 
+	java -jar correctiveEvolution.jar -scenario=carLogistics
 
-The event log is included in the 'financial/eventLogs' folder, and is a fragment of the complete log provided
+For the financial scenario, you can also select which type of corrections should be used by 
+setting the value "relaxed" (default) or "strict" to the type parameter:
+
+	java -jar correctiveEvolution.jar -scenario=financial -type=strict
+
+The event log for the financial scenario is included in the 'financial/eventLogs' folder, 
+and is a fragment of the complete log provided
 in the 2012 BPI Challenge (roughly one sixth). The log fragment can also be substituted with the complete log
 available here:
 http://www.win.tue.nl/bpi2013/doku.php?id=challenge

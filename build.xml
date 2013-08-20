@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<project name="CorrectiveEvolution" default="main">
+	<property file='config.properties'/>
+	
+	<property name="src.dir" location="src" />
+	<property name="lib.dir" location="lib" />
+	<property name="build.dir" location="bin" />
+	<property name="test.dir" location="functional-tests" />
+	<property name="unit.test.dir" location="unit-tests" />
+	<property name="output.dir" location="${outputDir}" />
+	<property name="reports.dir" location="reports" />	
+	
+	<target name="main" depends="test,jar"/>
+	
+	<path id="build.classpath">
+	    <fileset dir="${lib.dir}">
+	      <include name="**/*.jar" />
+	    </fileset>
+	</path>
+	
+	  <path id="project.classpath">
+	  	<path refid="build.classpath" />
+	    <pathelement location="${build.dir}" />
+	  </path>
+	
+	 <path id="jar.classpath">
+		 <path refid="build.classpath" />
+		 <pathelement location="correctiveEvolution.jar" />
+	</path>
+
+	<pathconvert property="libs.project" pathsep=" ">  
+	      <mapper>  
+	        <chainedmapper>  
+	          <!-- remove absolute path -->  
+	          <flattenmapper />  
+	          <!-- add lib/ prefix -->  
+	          <globmapper from="*" to="lib/*" />  
+	        </chainedmapper>  
+	      </mapper>  
+	      <path>  
+	        <!-- lib.dir contains all jar files, in several subdirectories -->  
+	        <fileset dir="${lib.dir}">  
+	          <include name="**/*.jar" />  
+	        </fileset>  
+	      </path> 
+	</pathconvert>	
+	
+	<target name="clean" description="remove intermediate files">
+        <delete dir="${build.dir}"/>
+        <delete file="correctiveEvolution.jar"/>
+    	<delete dir="${output.dir}"/>
+		<delete dir="${reports.dir}"/>
+    </target>
+	
+    <target name="compile" description="compile the Java source code to class files">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath"/>
+    	<javac srcdir="${test.dir}" destdir="${build.dir}" classpathref="build.classpath"/>
+    </target>
+	
+	<target name="compileUnitTest" depends="compile" description="compile jUnit Test cases ">
+	    <javac srcdir="${unit.test.dir}" destdir="${build.dir}" classpathref="build.classpath" includeantruntime="true" nowarn="yes" debug="true" />
+	</target>
+	
+	<target name="test" depends="clean,compileUnitTest" description="run unit tests">
+		<mkdir dir="reports"/>
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath refid="project.classpath" />
+			<formatter type="plain"/>
+			<formatter type="plain"/>
+		 	<batchtest fork="yes" todir="reports">
+		 	   <fileset dir="${unit.test.dir}">
+		 	   	<include name="**/*Test.java"/>
+				</fileset>
+		 	</batchtest>
+		</junit>
+    </target>
+    
+	<target name="jar" depends="compile" description="create a Jar file for the application">
+        <jar destfile="correctiveEvolution.jar">
+            <fileset dir="${build.dir}" includes="**/*.class" excludes="**/*Test*.class/" />
+            <manifest>
+                <attribute name="Main-Class" value="eu.fbk.soa.evolution.test.ScenarioLauncher"/>
+            	<attribute name="Class-Path" value="${libs.project}" />
+            </manifest>
+        </jar>
+    </target>
+
+</project>

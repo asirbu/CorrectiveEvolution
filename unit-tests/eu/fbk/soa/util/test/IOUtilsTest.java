@@ -1,4 +1,4 @@
-package eu.fbk.soa.util;
+package eu.fbk.soa.util.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -22,6 +22,7 @@ import eu.fbk.soa.evolution.sts.impl.DefaultAction;
 import eu.fbk.soa.evolution.sts.impl.DefaultSTS;
 import eu.fbk.soa.evolution.sts.impl.DefaultState;
 import eu.fbk.soa.evolution.sts.impl.DefaultTransition;
+import eu.fbk.soa.util.IOUtils;
 
 public class IOUtilsTest {
 

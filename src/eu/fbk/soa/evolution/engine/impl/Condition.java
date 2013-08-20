@@ -11,7 +11,7 @@ public class Condition {
 
 	Condition(){}
 	
-	Condition(StateFormula formula, int index) {
+	public Condition(StateFormula formula, int index) {
 		this.formula = formula;
 		this.index = index;
 	}
